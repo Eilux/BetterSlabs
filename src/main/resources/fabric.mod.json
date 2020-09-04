@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "betterslabs",
+  "version": "${version}",
+  "name": "Betterslabs",
+  "description": "Improves Slabs",
+  "authors": [
+    "Eilux"
+  ],
+  "contact": {
+    "website": "jack.bodner.dev"
+  },
+  "license": "MIT",
+  "icon": "assets/betterslabs/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "dev.bodner.jack.betterslabs.client.BetterslabsClient"
+    ],
+    "main": [
+      "dev.bodner.jack.betterslabs.Betterslabs"
+    ]
+  },
+  "mixins": [
+    "betterslabs.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.9.2+build.206",
+    "fabric": "*",
+    "minecraft": "1.16.2"
+  }
+}

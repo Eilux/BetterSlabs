@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "betterslabs:block/smooth_stone_slab"
+    },
+    "type=double": {
+      "model": "betterslabs:block/smooth_stone_slab_double"
+    },
+    "type=top": {
+      "model": "betterslabs:block/smooth_stone_slab_top"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "new_type=bottom": {
+      "model": "betterslabs:block/smooth_stone_slab"
+    },
+    "new_type=north": {
+      "model": "betterslabs:block/smooth_stone_slab_side"
+    },
+    "new_type=south": {
+      "model": "betterslabs:block/smooth_stone_slab_side",
+      "y": 180
+    },
+    "new_type=east": {
+      "model": "betterslabs:block/smooth_stone_slab_side",
+      "y": 90
+    },
+    "new_type=west": {
+      "model": "betterslabs:block/smooth_stone_slab_side",
+      "y": 270
+    },
+    "new_type=double": {
+      "model": "betterslabs:block/smooth_stone_slab_double"
+    },
+    "new_type=doublex": {
+      "model": "betterslabs:block/smooth_stone_slab_double_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "new_type=doublez": {
+      "model": "betterslabs:block/smooth_stone_slab_double_horizontal",
+      "x": 90
+    },
+    "new_type=top": {
+      "model": "betterslabs:block/smooth_stone_slab_top"
+    }
+  }
+}

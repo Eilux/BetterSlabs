@@ -58,6 +58,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public boolean hasSidedTransparency(BlockState state) {
@@ -72,6 +74,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -81,6 +85,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -108,6 +114,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
 
     @Nullable
@@ -148,6 +156,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
@@ -181,6 +191,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public FluidState getFluidState(BlockState state) {
@@ -190,6 +202,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
@@ -207,6 +221,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
@@ -224,6 +240,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     *functionality
      */
     @Overwrite
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
@@ -236,6 +254,8 @@ abstract class SlabMixin extends Block implements Waterloggable{
     /**
      * @author
      * Eilux
+     * @reason
+     * functionality
      */
     @Overwrite
     public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {

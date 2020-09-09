@@ -1,7 +1,6 @@
 package dev.bodner.jack.betterslabs.block;
 
 import dev.bodner.jack.betterslabs.block.enums.SlabTypeMod;
-import dev.bodner.jack.betterslabs.util.AutoModel;
 import jdk.internal.jline.internal.Nullable;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.SlabType;

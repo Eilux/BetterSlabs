@@ -22,6 +22,11 @@ dependencies {
     implementation 'org.jetbrains:annotations:15.0'
     implementation 'org.jetbrains:annotations:15.0'
 
+    modImplementation "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
+    include "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
+
+
+
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
 }
@@ -76,5 +81,6 @@ publishing {
     repositories {
         // uncomment to publish to the local maven
         // mavenLocal()
+        jcenter()
     }
 }

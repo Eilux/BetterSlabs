@@ -10,6 +10,13 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     //to change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -22,8 +29,10 @@ dependencies {
     implementation 'org.jetbrains:annotations:15.0'
     implementation 'org.jetbrains:annotations:15.0'
 
-    modImplementation "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
-    include "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
+//    modImplementation "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
+//    include "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
+    modImplementation name: 'artifice-eilux-0.13.2+1.16.2-dev'
+    include name: 'artifice-eilux-0.13.2+1.16.2'
 
 
 
@@ -79,8 +88,6 @@ publishing {
 
     // select the repositories you want to publish to
     repositories {
-        // uncomment to publish to the local maven
-        // mavenLocal()
-        jcenter()
+
     }
 }

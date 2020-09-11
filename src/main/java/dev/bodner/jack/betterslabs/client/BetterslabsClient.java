@@ -11,8 +11,8 @@ import dev.bodner.jack.betterslabs.json.JSONMap;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.Identifier;
 
-import java.io.*;
-import java.lang.reflect.Field;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,26 +20,11 @@ public class BetterslabsClient implements ClientModInitializer {
 
     public static List<Identifier> slabList = new ArrayList<>();
 
-
-    @Override
-    public void onInitializeClient() {
+    public static void createPack(){
         ArtificeResourcePack overwrite = Artifice.registerAssets("betterslabs:overwrite", pack -> {
             pack.setDisplayName("Betterslabs Overwriter");
             pack.setDescription("overwrites all slab blockstates and supplies models");
-            pack.setOptional();
-
-            //Reflection to make it invisible and optional (has net effect of applying pack over vanilla one and preventing it from being moved/disabled)
-            Field field = pack.getClass().getDeclaredFields()[0];
-            field.setAccessible(true);
-            try {
-                Object obj = field.get(pack);
-                Field visible = obj.getClass().getDeclaredField("visible");
-                visible.setAccessible(true);
-                visible.setBoolean(obj, false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //
+            pack.shouldOverwrite();
 
             for (int i = 0; i<=slabList.size()-1; i++){
                 Gson gson = new Gson();
@@ -50,7 +35,7 @@ public class BetterslabsClient implements ClientModInitializer {
                 Identifier sideLocation = new Identifier(slabList.get(i).getNamespace(), "models/block/" + slabList.get(i).getPath() + "_side.json");
                 Identifier doublesideLocation = new Identifier(slabList.get(i).getNamespace(), "models/block/" + slabList.get(i).getPath() + "_double_horizontal.json");
 
-                InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/" + slabList.get(i).getNamespace() + "/blockstates/" + slabList.get(i).getPath() + ".json");
+                InputStream stream = BetterslabsClient.class.getClassLoader().getResourceAsStream("assets/" + slabList.get(i).getNamespace() + "/blockstates/" + slabList.get(i).getPath() + ".json");
                 JsonObject blockstateObject = (JsonObject)jsonParser.parse(new InputStreamReader(stream));
                 JSONMap jsonBlockstate = gson.fromJson(blockstateObject, JSONMap.class);
 
@@ -59,7 +44,7 @@ public class BetterslabsClient implements ClientModInitializer {
                 String modelpathDouble = jsonBlockstate.getModel("type=double");
 
                 String[] modelarray = modelpathBottom.split(":");
-                InputStream stream1 = getClass().getClassLoader().getResourceAsStream("assets/" + modelarray[0] + "/models/" + modelarray[1] + ".json");
+                InputStream stream1 = BetterslabsClient.class.getClassLoader().getResourceAsStream("assets/" + modelarray[0] + "/models/" + modelarray[1] + ".json");
                 JsonObject modelObject = (JsonObject)jsonParser.parse(new InputStreamReader(stream1));
                 JSONMap jsonModel = gson.fromJson(modelObject, JSONMap.class);
 
@@ -128,5 +113,10 @@ public class BetterslabsClient implements ClientModInitializer {
                 ));
             }
         });
+    }
+
+    @Override
+    public void onInitializeClient() {
+
     }
 }

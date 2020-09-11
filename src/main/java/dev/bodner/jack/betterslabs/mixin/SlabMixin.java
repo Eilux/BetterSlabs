@@ -206,25 +206,6 @@ abstract class SlabMixin extends Block implements Waterloggable{
      * functionality
      */
     @Overwrite
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
-        switch (state.get(NEW_TYPE)){
-            case DOUBLE:
-            case DOUBLEZ:
-            case DOUBLEX:
-                return false;
-            default:
-                Waterloggable.super.tryFillWithFluid(world, pos, state, fluidState);
-                return true;
-        }
-    }
-
-    /**
-     * @author
-     * Eilux
-     * @reason
-     * functionality
-     */
-    @Overwrite
     public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
         switch (state.get(NEW_TYPE)) {
             case DOUBLE:

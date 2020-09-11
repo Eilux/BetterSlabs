@@ -20,12 +20,12 @@ import java.util.List;
 
 public class Betterslabs implements ModInitializer {
 
-    public static final SlabBlockMod SMOOTH_STONE_SLAB = new SlabBlockMod(FabricBlockSettings.of(Material.STONE, MaterialColor.STONE).requiresTool().strength(2.0F, 6.0F));
+    public static final SlabBlockMod TESTSLAB = new SlabBlockMod(FabricBlockSettings.of(Material.STONE, MaterialColor.STONE).requiresTool().strength(2.0F, 6.0F));
 
 
     @Override
     public void onInitialize() {
-        Registry.register(Registry.BLOCK, new Identifier("betterslabs","smooth_stone_slab"),SMOOTH_STONE_SLAB);
-        Registry.register(Registry.ITEM,new Identifier("betterslabs","smooth_stone_slab"),new BlockItem(SMOOTH_STONE_SLAB, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+        Registry.register(Registry.BLOCK, new Identifier("betterslabs","test_slab"),TESTSLAB);
+        Registry.register(Registry.ITEM,new Identifier("betterslabs","test_slab"),new BlockItem(TESTSLAB, new Item.Settings()));
     }
 }

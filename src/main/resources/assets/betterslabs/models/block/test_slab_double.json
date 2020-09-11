@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "betterslabs:block/test",
+    "side": "betterslabs:block/test_slab_side"
+  }
+}

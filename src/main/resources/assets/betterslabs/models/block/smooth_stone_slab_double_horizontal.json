@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column_horizontal",
-  "textures": {
-    "end": "betterslabs:block/smooth_stone",
-    "side": "betterslabs:block/smooth_stone_slab_side"
-  }
-}

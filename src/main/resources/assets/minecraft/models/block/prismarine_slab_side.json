@@ -1,8 +1,0 @@
-{
-  "parent": "betterslabs:block/side_slab",
-  "textures": {
-    "bottom": "minecraft:block/prismarine",
-    "top": "minecraft:block/prismarine",
-    "side": "minecraft:block/prismarine"
-  }
-}

@@ -34,7 +34,7 @@ abstract class SlabMixin extends Block implements Waterloggable{
 
     @Shadow @Final public static EnumProperty<SlabType> TYPE;
     private static final EnumProperty<SlabTypeMod> NEW_TYPE = EnumProperty.of("new_type", SlabTypeMod.class);
-    private static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    @Shadow @Final public static BooleanProperty WATERLOGGED;
     private static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     private static final VoxelShape TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     private static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D);
@@ -206,6 +206,32 @@ abstract class SlabMixin extends Block implements Waterloggable{
      * functionality
      */
     @Overwrite
+    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+        switch (state.get(NEW_TYPE)){
+            case DOUBLE:
+            case DOUBLEZ:
+            case DOUBLEX:
+                return false;
+            default:
+                if (!(Boolean)state.get(Properties.WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
+                    if (!world.isClient()) {
+                        world.setBlockState(pos, state.with(Properties.WATERLOGGED, true), 3);
+                        world.getFluidTickScheduler().schedule(pos, fluidState.getFluid(), fluidState.getFluid().getTickRate(world));
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+        }
+    }
+
+    /**
+     * @author
+     * Eilux
+     * @reason
+     * functionality
+     */
+    @Overwrite
     public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
         switch (state.get(NEW_TYPE)) {
             case DOUBLE:
@@ -213,8 +239,7 @@ abstract class SlabMixin extends Block implements Waterloggable{
             case DOUBLEX:
                 return false;
             default:
-                Waterloggable.super.canFillWithFluid(world, pos, state, fluid);
-                return true;
+                return !(Boolean)state.get(Properties.WATERLOGGED) && fluid == Fluids.WATER;
         }
     }
 

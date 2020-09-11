@@ -24,7 +24,6 @@ import net.minecraft.world.WorldAccess;
 
 public class SlabBlockMod extends Block implements Waterloggable {
     public static final EnumProperty<SlabTypeMod> TYPE;
-    public static final EnumProperty<SlabType> OLD_TYPE;
     public static final BooleanProperty WATERLOGGED;
     protected static final VoxelShape BOTTOM_SHAPE;
     protected static final VoxelShape TOP_SHAPE;
@@ -32,13 +31,11 @@ public class SlabBlockMod extends Block implements Waterloggable {
     private static final VoxelShape SOUTH_SHAPE;
     private static final VoxelShape EAST_SHAPE;
     private static final VoxelShape WEST_SHAPE;
-    private StateManager<Block, BlockState> state;
 
 
     public SlabBlockMod(AbstractBlock.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(OLD_TYPE, SlabType.BOTTOM).with(WATERLOGGED, false));
-        this.setDefaultState(this.getDefaultState().with(OLD_TYPE, SlabType.BOTTOM).with(WATERLOGGED, false).with(TYPE, SlabTypeMod.BOTTOM));
+        this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false).with(TYPE, SlabTypeMod.BOTTOM));
     }
 
     public boolean hasSidedTransparency(BlockState state) {
@@ -52,11 +49,11 @@ public class SlabBlockMod extends Block implements Waterloggable {
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(OLD_TYPE, WATERLOGGED,TYPE);
+        builder.add(WATERLOGGED,TYPE);
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        SlabTypeMod slabType = (SlabTypeMod)state.get(TYPE);
+        SlabTypeMod slabType = state.get(TYPE);
         switch(slabType) {
             case DOUBLEX:
             case DOUBLEZ:
@@ -186,7 +183,6 @@ public class SlabBlockMod extends Block implements Waterloggable {
 
     static {
         TYPE = EnumProperty.of("new_type", SlabTypeMod.class);
-        OLD_TYPE = EnumProperty.of("type", SlabType.class);
         WATERLOGGED = Properties.WATERLOGGED;
         BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
         TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);

@@ -1,0 +1,8 @@
+{
+  "parent": "betterslabs:block/side_slab",
+  "textures": {
+    "bottom": "betterslabs:block/test",
+    "top": "betterslabs:block/test",
+    "side": "betterslabs:block/test_slab_side"
+  }
+}

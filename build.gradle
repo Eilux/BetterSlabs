@@ -29,10 +29,12 @@ dependencies {
     implementation 'org.jetbrains:annotations:15.0'
     implementation 'org.jetbrains:annotations:15.0'
 
-//    modImplementation "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
-//    include "com.lettuce.fudge:artifice:0.13.1+1.16.2-rc1"
-    modImplementation name: 'artifice-eilux-0.13.2+1.16.2-dev'
-    include name: 'artifice-eilux-0.13.2+1.16.2'
+
+//    modImplementation name: 'artifice-eilux-0.13.2+1.16.2-dev'
+//    include name: 'artifice-eilux-0.13.2+1.16.2'
+
+    modImplementation name: 'artifice-0.13.2+1.16.3-dev'
+    include name: 'artifice-0.13.2+1.16.3'
 
 
 

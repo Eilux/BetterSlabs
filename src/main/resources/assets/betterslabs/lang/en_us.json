@@ -1,3 +1,5 @@
 {
-  "block.betterslabs.smooth_stone_slab" : "Test Slab"
+  "block.betterslabs.test_slab" : "Test Slab",
+
+  "key.betterslabs.placemode": "Change Slab Placement Mode"
 }

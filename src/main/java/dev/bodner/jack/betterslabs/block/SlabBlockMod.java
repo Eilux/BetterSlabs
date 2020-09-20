@@ -1,9 +1,9 @@
 package dev.bodner.jack.betterslabs.block;
 
-import dev.bodner.jack.betterslabs.block.enums.SlabTypeMod;
+import dev.bodner.jack.betterslabs.client.BetterslabsClient;
+import dev.bodner.jack.betterslabs.enums.SlabTypeMod;
 import jdk.internal.jline.internal.Nullable;
 import net.minecraft.block.*;
-import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -21,6 +21,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
+import org.spongepowered.asm.mixin.Overwrite;
 
 public class SlabBlockMod extends Block implements Waterloggable {
     public static final EnumProperty<SlabTypeMod> TYPE;
@@ -74,67 +75,139 @@ public class SlabBlockMod extends Block implements Waterloggable {
         }
     }
 
-    @Nullable
+    @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockPos blockPos = ctx.getBlockPos();
         BlockState blockState = ctx.getWorld().getBlockState(blockPos);
-        if (blockState.isOf(this)) {
-             if (blockState.equals(blockState.with(TYPE,SlabTypeMod.TOP)) || blockState.equals(blockState.with(TYPE,SlabTypeMod.BOTTOM))){
-                 return blockState.with(TYPE, SlabTypeMod.DOUBLE).with(WATERLOGGED, false);
-             }if (blockState.equals(blockState.with(TYPE,SlabTypeMod.NORTH)) || blockState.equals(blockState.with(TYPE,SlabTypeMod.SOUTH))){
+        if (blockState.isOf((this))) {
+            if (blockState.equals(blockState.with(TYPE,SlabTypeMod.TOP)) || blockState.equals(blockState.with(TYPE,SlabTypeMod.BOTTOM))){
+                return blockState.with(TYPE, SlabTypeMod.DOUBLE).with(WATERLOGGED, false);
+            }if (blockState.equals(blockState.with(TYPE,SlabTypeMod.NORTH)) || blockState.equals(blockState.with(TYPE,SlabTypeMod.SOUTH))){
                 return blockState.with(TYPE, SlabTypeMod.DOUBLEZ).with(WATERLOGGED, false);
             }if (blockState.equals(blockState.with(TYPE,SlabTypeMod.EAST)) || blockState.equals(blockState.with(TYPE,SlabTypeMod.WEST))){
                 return blockState.with(TYPE, SlabTypeMod.DOUBLEX).with(WATERLOGGED, false);
             }else{
-                 return blockState;
+                return blockState;
             }
         } else {
             FluidState fluidState = ctx.getWorld().getFluidState(blockPos);
-            BlockState blockState2 = this.getDefaultState().with(TYPE, SlabTypeMod.BOTTOM).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+            BlockState blockState2 = (this).getDefaultState().with(TYPE, SlabTypeMod.BOTTOM).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
             Direction direction = ctx.getSide();
-            switch (direction){
-                case SOUTH:
-                    return blockState2.with(TYPE,SlabTypeMod.NORTH);
-                case NORTH:
-                    return blockState2.with(TYPE,SlabTypeMod.SOUTH);
-                case WEST:
-                    return blockState2.with(TYPE,SlabTypeMod.EAST);
-                case EAST:
-                    return blockState2.with(TYPE,SlabTypeMod.WEST);
-                case DOWN:
-                    return blockState2.with(TYPE,SlabTypeMod.TOP);
-                default: return blockState2;
+            switch (BetterslabsClient.mode){
+                case HORIZONTAL:
+                    return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double)blockPos.getY() <= 0.5D) ? blockState2 : blockState2.with(TYPE, SlabTypeMod.TOP);
+                case VERTICAL:
+                    double xPos = (ctx.getHitPos().x - (double)blockPos.getX()) - 0.5D;
+                    double zPos = (ctx.getHitPos().z - (double)blockPos.getZ()) - 0.5D;
+
+                    if (direction == Direction.DOWN || direction == Direction.UP){
+                        if(Math.abs(xPos)>Math.abs(zPos)){
+                            if(xPos <= 0){
+                                return blockState2.with(TYPE,SlabTypeMod.WEST);
+                            }else {
+                                return blockState2.with(TYPE,SlabTypeMod.EAST);
+                            }
+                        }else {
+                            if(zPos <= 0){
+                                return blockState2.with(TYPE,SlabTypeMod.NORTH);
+                            }else {
+                                return blockState2.with(TYPE,SlabTypeMod.SOUTH);
+                            }
+                        }
+                    }
+
+                default:
+                    switch (direction){
+                        case SOUTH:
+                            return blockState2.with(TYPE,SlabTypeMod.NORTH);
+                        case NORTH:
+                            return blockState2.with(TYPE,SlabTypeMod.SOUTH);
+                        case WEST:
+                            return blockState2.with(TYPE,SlabTypeMod.EAST);
+                        case EAST:
+                            return blockState2.with(TYPE,SlabTypeMod.WEST);
+                        case DOWN:
+                            return blockState2.with(TYPE,SlabTypeMod.TOP);
+                        default: return blockState2;
+                    }
             }
         }
     }
 
+
+    @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
         ItemStack itemStack = context.getStack();
         SlabTypeMod slabType = state.get(TYPE);
-        if (itemStack.getItem() == this.asItem()){
+        if (itemStack.getItem() == (this).asItem()){
             Direction direction = context.getSide();
-            switch (slabType){
-                case DOUBLEX:
-                case DOUBLEZ:
-                case DOUBLE:
-                    return false;
-                case BOTTOM:
-                    return direction == Direction.UP;
-                case TOP:
-                    return direction == Direction.DOWN;
-                case NORTH:
-                    return direction == Direction.SOUTH;
-                case SOUTH:
-                    return direction == Direction.NORTH;
-                case EAST:
-                    return direction == Direction.WEST;
-                case WEST:
-                    return  direction == Direction.EAST;
+            boolean bl = context.getHitPos().y - (double)context.getBlockPos().getY() > 0.5D;
+            boolean blz = context.getHitPos().z - (double)context.getBlockPos().getZ() > 0.5D;
+            boolean blx = context.getHitPos().x - (double)context.getBlockPos().getX() > 0.5D;
+
+            switch (BetterslabsClient.mode){
+                case HORIZONTAL:
+                    if (context.canReplaceExisting()){
+                        switch (slabType){
+                            case TOP:
+                                return direction == Direction.DOWN || !bl && direction.getAxis().isHorizontal();
+                            case BOTTOM:
+                                return direction == Direction.UP || bl && direction.getAxis().isHorizontal();
+                            default:
+                                return false;
+                        }
+                    }else {
+                        return true;
+                    }
+
+                case VERTICAL:
+                    if (context.canReplaceExisting()){
+                        if (direction == Direction.DOWN || direction == Direction.UP){
+                            return false;
+                        }
+                        switch (slabType){
+                            case NORTH:
+                                return direction == Direction.SOUTH || !blz && direction.getAxis().isVertical();
+                            case SOUTH:
+                                return direction == Direction.NORTH || blz && direction.getAxis().isVertical();
+                            case EAST:
+                                return direction == Direction.WEST || blx && direction.getAxis().isVertical();
+                            case WEST:
+                                return direction == Direction.EAST || !blx && direction.getAxis().isVertical();
+                            default:
+                                return false;
+                        }
+                    }else {
+                        return true;
+                    }
+
                 default:
-                    return true;
+                    switch (slabType) {
+                        case DOUBLEX:
+                        case DOUBLEZ:
+                        case DOUBLE:
+                            return false;
+                        case BOTTOM:
+                            return direction == Direction.UP;
+                        case TOP:
+                            return direction == Direction.DOWN;
+                        case NORTH:
+                            return direction == Direction.SOUTH;
+                        case SOUTH:
+                            return direction == Direction.NORTH;
+                        case EAST:
+                            return direction == Direction.WEST;
+                        case WEST:
+                            return direction == Direction.EAST;
+                        default:
+                            return true;
+                    }
             }
-        } else {return false;}
+        }else {
+            return false;
+        }
     }
+
 
     public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);

@@ -7,9 +7,17 @@ import com.google.gson.JsonParser;
 import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import com.swordglowsblue.artifice.api.resource.StringResource;
+import dev.bodner.jack.betterslabs.enums.SlabPlaceMode;
 import dev.bodner.jack.betterslabs.json.JSONMap;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import org.lwjgl.glfw.GLFW;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +27,7 @@ import java.util.List;
 public class BetterslabsClient implements ClientModInitializer {
 
     public static List<Identifier> slabList = new ArrayList<>();
+    public static SlabPlaceMode mode = SlabPlaceMode.ALL;
 
     public static void createPack(){
         ArtificeResourcePack overwrite = Artifice.registerAssets("betterslabs:overwrite", pack -> {
@@ -117,6 +126,23 @@ public class BetterslabsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
+        KeyBinding placemodeKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.betterslabs.placemode", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.misc"));
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (placemodeKey.wasPressed()){
+                mode = mode.next();
+                assert client.player != null;
+                switch (mode){
+                    case VERTICAL:
+                        client.player.sendMessage(Text.of("Slab placement mode set to: vertical only"),true);
+                        break;
+                    case HORIZONTAL:
+                        client.player.sendMessage(Text.of("Slab placement mode set to: horizontal only"),true);
+                        break;
+                    default:
+                        client.player.sendMessage(Text.of("Slab placement mode set to: all"),true);
+                        break;
+                }
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package dev.bodner.jack.betterslabs.block.enums;
+package dev.bodner.jack.betterslabs.enums;
 
 import net.minecraft.util.StringIdentifiable;
 

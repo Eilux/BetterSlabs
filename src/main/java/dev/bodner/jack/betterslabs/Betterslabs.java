@@ -26,16 +26,6 @@ public class Betterslabs implements ModInitializer {
 
     public static final SlabBlockMod TESTSLAB = new SlabBlockMod(FabricBlockSettings.of(Material.STONE, MaterialColor.STONE).requiresTool().strength(2.0F, 6.0F));
 
-//    private static final String dir = FabricLoader.getInstance().getConfigDir().toString() + "/betterslabs.cfg";
-//    public static File betterSlabConfig = new File(dir);
-//
-//    public static void configReader() throws IOException {
-//        if (!betterSlabConfig.exists()){
-//            FileUtils.openOutputStream(betterSlabConfig).write(("placemode=0").getBytes());
-//        }
-//        Reader reader = new FileReader(betterSlabConfig);
-//    }
-
     @Override
     public void onInitialize() {
         Registry.register(Registry.BLOCK, new Identifier("betterslabs","test_slab"),TESTSLAB);

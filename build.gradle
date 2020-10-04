@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.jetbrains:annotations:15.0'
 
 
+    modImplementation 'com.github.Virtuoel:Statement:1.16.2-SNAPSHOT'
+    include 'com.github.Virtuoel:Statement:1.16.2-SNAPSHOT'
 
     modImplementation "com.lettuce.fudge:artifice:0.13.2+1.16.3"
     include "com.lettuce.fudge:artifice:0.13.2+1.16.3"
@@ -67,15 +69,9 @@ jar {
 
 // configure the maven publication
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            // add all the jars that should be included when publishing to maven
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-        }
+}
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
     }
 }

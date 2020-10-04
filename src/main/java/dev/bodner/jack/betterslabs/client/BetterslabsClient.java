@@ -15,7 +15,6 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -51,6 +50,8 @@ public class BetterslabsClient implements ClientModInitializer {
                 String modelpathBottom = jsonBlockstate.getModel("type=bottom");
                 String modelpathTop = jsonBlockstate.getModel("type=top");
                 String modelpathDouble = jsonBlockstate.getModel("type=double");
+                String modelpathHDouble = slabList.get(i).getNamespace() + ":block/" + slabList.get(i).getPath() + "_double_horizontal";
+                String modelpathSide = slabList.get(i).getNamespace() + ":block/" + slabList.get(i).getPath() + "_side";
 
                 String[] modelarray = modelpathBottom.split(":");
                 InputStream stream1 = BetterslabsClient.class.getClassLoader().getResourceAsStream("assets/" + modelarray[0] + "/models/" + modelarray[1] + ".json");
@@ -84,38 +85,38 @@ public class BetterslabsClient implements ClientModInitializer {
                 pack.add(blockstateLocation, new StringResource(
                         "{\n" +
                                 "  \"variants\": {\n" +
-                                "    \"new_type=bottom\": {\n" +
-                                "      \"model\": \"" + modelpathBottom + "\"\n" +
-                                "    },\n" +
-                                "    \"new_type=north\": {\n" +
-                                "      \"model\": \"" + slabList.get(i).getNamespace() + ":block/" + slabList.get(i).getPath() + "_side\"\n" +
-                                "    },\n" +
-                                "    \"new_type=south\": {\n" +
-                                "      \"model\": \"" + slabList.get(i).getNamespace() + ":block/" + slabList.get(i).getPath() + "_side\",\n" +
-                                "      \"y\": 180\n" +
-                                "    },\n" +
-                                "    \"new_type=east\": {\n" +
-                                "      \"model\": \"" + slabList.get(i).getNamespace() + ":block/"  + slabList.get(i).getPath() + "_side\",\n" +
-                                "      \"y\": 90\n" +
-                                "    },\n" +
-                                "    \"new_type=west\": {\n" +
-                                "      \"model\": \"" + slabList.get(i).getNamespace() + ":block/" + slabList.get(i).getPath() + "_side\",\n" +
+                                "    \"axis=x,type=bottom\": {\n" +
+                                "      \"model\": \""+modelpathSide+"\",\n" +
                                 "      \"y\": 270\n" +
                                 "    },\n" +
-                                "    \"new_type=double\": {\n" +
-                                "      \"model\": \"" + modelpathDouble + "\"\n" +
+                                "    \"axis=x,type=top\": {\n" +
+                                "      \"model\": \""+modelpathSide+"\",\n" +
+                                "      \"y\": 90\n" +
                                 "    },\n" +
-                                "    \"new_type=doublex\": {\n" +
-                                "      \"model\": \"" + slabList.get(i).getNamespace() + ":block/" + slabList.get(i).getPath() + "_double_horizontal\",\n" +
+                                "    \"axis=x,type=double\": {\n" +
+                                "      \"model\": \""+modelpathHDouble+"\",\n" +
                                 "      \"x\": 90,\n" +
                                 "      \"y\": 90\n" +
                                 "    },\n" +
-                                "    \"new_type=doublez\": {\n" +
-                                "      \"model\": \"" + slabList.get(i).getNamespace() + ":block/" + slabList.get(i).getPath() + "_double_horizontal\",\n" +
-                                "      \"x\": 90\n" +
+                                "    \"axis=y,type=bottom\": {\n" +
+                                "      \"model\": \""+modelpathBottom+"\"\n" +
                                 "    },\n" +
-                                "    \"new_type=top\": {\n" +
-                                "      \"model\": \"" + modelpathTop + "\"\n" +
+                                "    \"axis=y,type=top\": {\n" +
+                                "      \"model\": \""+modelpathTop+"\"\n" +
+                                "    },\n" +
+                                "    \"axis=y,type=double\": {\n" +
+                                "      \"model\": \""+modelpathDouble+"\"\n" +
+                                "    },\n" +
+                                "    \"axis=z,type=bottom\": {\n" +
+                                "      \"model\": \""+modelpathSide+"\"\n" +
+                                "    },\n" +
+                                "    \"axis=z,type=top\": {\n" +
+                                "      \"model\": \""+modelpathSide+"\",\n" +
+                                "      \"y\": 180\n" +
+                                "    },\n" +
+                                "    \"axis=z,type=double\": {\n" +
+                                "      \"model\": \""+modelpathHDouble+"\",\n" +
+                                "      \"x\": 90\n" +
                                 "    }\n" +
                                 "  }\n" +
                                 "}"

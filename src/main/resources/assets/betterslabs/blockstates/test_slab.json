@@ -1,37 +1,37 @@
 {
   "variants": {
-    "new_type=bottom": {
-      "model": "betterslabs:block/test_slab"
-    },
-    "new_type=north": {
-      "model": "betterslabs:block/test_slab_side"
-    },
-    "new_type=south": {
-      "model": "betterslabs:block/test_slab_side",
-      "y": 180
-    },
-    "new_type=east": {
-      "model": "betterslabs:block/test_slab_side",
-      "y": 90
-    },
-    "new_type=west": {
+    "axis=x,type=bottom": {
       "model": "betterslabs:block/test_slab_side",
       "y": 270
     },
-    "new_type=double": {
-      "model": "betterslabs:block/test_slab_double"
+    "axis=x,type=top": {
+      "model": "betterslabs:block/test_slab_side",
+      "y": 90
     },
-    "new_type=doublex": {
+    "axis=x,type=double": {
       "model": "betterslabs:block/test_slab_double_horizontal",
       "x": 90,
       "y": 90
     },
-    "new_type=doublez": {
+    "axis=y,type=bottom": {
+      "model": "betterslabs:block/test_slab"
+    },
+    "axis=y,type=top": {
+      "model": "betterslabs:block/test_slab_top"
+    },
+    "axis=y,type=double": {
+      "model": "betterslabs:block/test_slab_double"
+    },
+    "axis=z,type=bottom": {
+      "model": "betterslabs:block/test_slab_side"
+    },
+    "axis=z,type=top": {
+      "model": "betterslabs:block/test_slab_side",
+      "y": 180
+    },
+    "axis=z,type=double": {
       "model": "betterslabs:block/test_slab_double_horizontal",
       "x": 90
-    },
-    "new_type=top": {
-      "model": "betterslabs:block/test_slab_top"
     }
   }
 }

@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.5.1'
+    id 'fabric-loom' version '0.5-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -20,9 +20,6 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation 'org.jetbrains:annotations:15.0'
-    implementation 'org.jetbrains:annotations:15.0'
-    implementation 'org.jetbrains:annotations:15.0'
-
 
     modImplementation 'com.github.Virtuoel:Statement:1.16.2-SNAPSHOT'
     include 'com.github.Virtuoel:Statement:1.16.2-SNAPSHOT'
@@ -30,6 +27,9 @@ dependencies {
     modImplementation "com.lettuce.fudge:artifice:0.13.2+1.16.3"
     include "com.lettuce.fudge:artifice:0.13.2+1.16.3"
 
+    //
+    modImplementation name: 'better-nether-5.0.0-dev'
+    //
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
@@ -73,5 +73,8 @@ publishing {
 allprojects {
     repositories {
         maven { url 'https://jitpack.io' }
+        flatDir {
+            dirs 'libs'
+        }
     }
 }

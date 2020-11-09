@@ -69,9 +69,31 @@ public class BetterslabsClient implements ClientModInitializer {
                     ModelMap modelMap = gson.fromJson(modelObject,ModelMap.class);
 
                     //splits textures into arrays
-                    String[] textureArrayTop = modelMap.getTexture("top").split(":");
-                    String[] textureArrayBottom = modelMap.getTexture("bottom").split(":");
-                    String[] textureArraySide = modelMap.getTexture("side").split(":");
+                    String[] textureArrayTop;
+                    String[] textureArrayBottom;
+                    String[] textureArraySide;
+                    if(modelMap.getTexture("top").split(":").length == 1){
+                        textureArrayTop = new String[]{"minecraft", modelMap.getTexture("top")};
+                    }
+                    else {
+                        textureArrayTop = modelMap.getTexture("top").split(":");
+
+                    }
+
+                    if(modelMap.getTexture("bottom").split(":").length == 1){
+                        textureArrayBottom = new String[]{"minecraft", modelMap.getTexture("bottom")};
+                    }
+                    else {
+                        textureArrayBottom = modelMap.getTexture("bottom").split(":");
+
+                    }
+
+                    if(modelMap.getTexture("side").split(":").length == 1){
+                        textureArraySide = new String[]{"minecraft", modelMap.getTexture("side")};
+                    }
+                    else {
+                        textureArraySide = modelMap.getTexture("side").split(":");
+                    }
 
                     //get model identifiers
                     Identifier sideLocation = new Identifier(slabList.get(i).getNamespace(), slabList.get(i).getPath() + "_side_" + j);

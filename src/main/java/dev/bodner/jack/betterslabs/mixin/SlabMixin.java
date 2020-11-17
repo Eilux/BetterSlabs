@@ -1,6 +1,7 @@
 package dev.bodner.jack.betterslabs.mixin;
 
 import dev.bodner.jack.betterslabs.client.BetterslabsClient;
+import dev.bodner.jack.betterslabs.component.Components;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.fluid.FluidState;
@@ -88,7 +89,7 @@ abstract class SlabMixin {
             FluidState fluidState = ctx.getWorld().getFluidState(blockPos);
             BlockState blockState2 = ((SlabBlock)(Object)this).getDefaultState().with(TYPE, SlabType.BOTTOM).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER).with(AXIS, Direction.Axis.Y);
             Direction direction = ctx.getSide();
-            switch (BetterslabsClient.mode){
+            switch (Components.MODE_KEY.get(ctx.getPlayer()).getPlaceMode()){
                 case HORIZONTAL:
                     blockState2.with(AXIS, Direction.Axis.Y);
                     return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double)blockPos.getY() <= 0.5D) ? blockState2 : blockState2.with(TYPE, SlabType.TOP);
@@ -146,7 +147,7 @@ abstract class SlabMixin {
             boolean blz = context.getHitPos().z - (double)context.getBlockPos().getZ() > 0.5D;
             boolean blx = context.getHitPos().x - (double)context.getBlockPos().getX() > 0.5D;
 
-            switch (BetterslabsClient.mode){
+            switch (Components.MODE_KEY.get(context.getPlayer()).getPlaceMode()){
                 case HORIZONTAL:
                     if (context.canReplaceExisting()){
                         if (axis == Direction.Axis.Y){

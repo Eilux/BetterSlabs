@@ -7,18 +7,21 @@ import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import com.swordglowsblue.artifice.api.resource.StringResource;
 import dev.bodner.jack.betterslabs.Betterslabs;
+import dev.bodner.jack.betterslabs.component.Components;
 import dev.bodner.jack.betterslabs.enums.SlabPlaceMode;
 import dev.bodner.jack.betterslabs.json.BlockstateMap;
 import dev.bodner.jack.betterslabs.json.ModelMap;
+import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.CallbackI;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,7 +31,6 @@ import java.util.List;
 public class BetterslabsClient implements ClientModInitializer {
 
     public static List<Identifier> slabList = new ArrayList<>();
-    public static SlabPlaceMode mode = SlabPlaceMode.ALL;
 
     public static void createPack(){
         //Creates Artifice pack
@@ -153,9 +155,10 @@ public class BetterslabsClient implements ClientModInitializer {
         KeyBinding placemodeKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.betterslabs.placemode", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.misc"));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (placemodeKey.wasPressed()){
-                mode = mode.next();
-                assert client.player != null;
-                switch (mode){
+                PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+                passedData.writeBoolean(true);
+                ClientSidePacketRegistry.INSTANCE.sendToServer(Betterslabs.PLACE_MODE_PACKET_ID,passedData);
+                switch (Components.MODE_KEY.get(client.player).getPlaceMode()){
                     case VERTICAL:
                         client.player.sendMessage(Text.of("Slab placement mode set to: vertical only"),true);
                         break;

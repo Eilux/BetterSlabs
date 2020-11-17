@@ -69,27 +69,5 @@ public class BlockstateMap {
         }
         return str;
     }
-
-    public static void main(String[] args) {
-        dumpJSON("/assets/mubble/blockstates/mirror_temple_brick_slab.json");
-        dumpJSON("/assets/minecraft/blockstates/oak_slab.json");
-    }
-
-    private static void dumpJSON(String file) {
-        Gson gson = new Gson();
-        InputStream is = BlockstateMap.class.getResourceAsStream(file);
-        BlockstateMap bs = gson.fromJson(new InputStreamReader(is), BlockstateMap.class);
-//        System.out.println("Bottom List:"+bs.isBottomList());
-        System.out.println("Top List:"+bs.isTopList());
-//        System.out.println("Double List:"+bs.isDoubleList());
-
-        System.out.println(bs.getTop());
-        System.out.println(bs.getBottom());
-        System.out.println(bs.getDouble());
-
-
-//        String roundTrip= gson.toJson(bs);
-//        System.out.println("roundTrip = " + roundTrip);
-    }
 }
 

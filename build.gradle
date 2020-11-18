@@ -10,6 +10,14 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+    maven {
+        name = "Ladysnake Libs"
+        url = "https://dl.bintray.com/ladysnake/libs"
+    }
+}
+
+
 
 dependencies {
     //to change the versions see the gradle.properties file
@@ -27,11 +35,13 @@ dependencies {
     modImplementation "com.lettuce.fudge:artifice:0.13.2+1.16.3"
     include "com.lettuce.fudge:artifice:0.13.2+1.16.3"
 
-    modImplementation 'com.github.OnyxStudios:Cardinal-Components-API:2.7.5'
-    include 'com.github.OnyxStudios:Cardinal-Components-API:2.7.5'
+    modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.5"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-util:2.7.5"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:2.7.5"
 
-    //
-    //
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.5"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-util:2.7.5"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:2.7.5"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.

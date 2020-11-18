@@ -158,7 +158,7 @@ public class BetterslabsClient implements ClientModInitializer {
                 PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                 passedData.writeBoolean(true);
                 ClientSidePacketRegistry.INSTANCE.sendToServer(Betterslabs.PLACE_MODE_PACKET_ID,passedData);
-                switch (Components.MODE_KEY.get(client.player).getPlaceMode()){
+                switch (Components.MODE_KEY.get(client.player).getPlaceMode().next()){
                     case VERTICAL:
                         client.player.sendMessage(Text.of("Slab placement mode set to: vertical only"),true);
                         break;

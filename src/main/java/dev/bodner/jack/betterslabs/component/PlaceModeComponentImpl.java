@@ -14,13 +14,13 @@ public class PlaceModeComponentImpl implements PlaceModeComponent, AutoSyncedCom
     private SlabPlaceMode mode;
 
     public PlaceModeComponentImpl(){
-        mode = SlabPlaceMode.ALL;
+        this.mode = SlabPlaceMode.ALL;
     }
 
     @Override
     public void incrementPlaceMode() {
         this.mode = this.mode.next();
-        Components.MODE_KEY.sync(this.mode);
+//        Components.MODE_KEY.sync(this.mode);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class PlaceModeComponentImpl implements PlaceModeComponent, AutoSyncedCom
     public void readFromNbt(CompoundTag compoundTag) {
         try{
             this.mode = SlabPlaceMode.fromString(compoundTag.getString("placemode"));
-            Components.MODE_KEY.sync(this.mode);
+//            Components.MODE_KEY.sync(this.mode);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,6 +41,5 @@ public class PlaceModeComponentImpl implements PlaceModeComponent, AutoSyncedCom
     @Override
     public void writeToNbt(CompoundTag compoundTag) {
         compoundTag.putString("placemode", SlabPlaceMode.toString(this.mode));
-        Components.MODE_KEY.sync(this.mode);
     }
 }

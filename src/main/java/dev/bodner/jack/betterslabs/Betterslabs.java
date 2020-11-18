@@ -25,6 +25,7 @@ public class Betterslabs implements ModInitializer {
         ServerSidePacketRegistry.INSTANCE.register(PLACE_MODE_PACKET_ID, (packetContext, packetByteBuf) -> {
                     packetContext.getTaskQueue().execute(() -> {
                         Components.MODE_KEY.get(packetContext.getPlayer()).incrementPlaceMode();
+                        Components.MODE_KEY.sync(packetContext.getPlayer());
                     });
                 });
     }

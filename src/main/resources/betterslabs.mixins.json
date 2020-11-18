@@ -4,7 +4,6 @@
   "package": "dev.bodner.jack.betterslabs.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "SlabGetterMixin",
     "SlabMixin"
   ],
   "client": [

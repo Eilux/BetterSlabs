@@ -1,6 +1,9 @@
 package dev.bodner.jack.betterslabs.block;
 
+import dev.bodner.jack.betterslabs.Betterslabs;
 import dev.bodner.jack.betterslabs.client.BetterslabsClient;
+import dev.bodner.jack.betterslabs.component.Components;
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -9,6 +12,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
@@ -92,45 +96,48 @@ public class SlabBlockMod extends Block implements Waterloggable {
             FluidState fluidState = ctx.getWorld().getFluidState(blockPos);
             BlockState blockState2 = (this).getDefaultState().with(TYPE, SlabType.BOTTOM).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER).with(AXIS, Direction.Axis.Y);
             Direction direction = ctx.getSide();
-            switch (BetterslabsClient.mode){
-                case HORIZONTAL:
-                    blockState2.with(AXIS, Direction.Axis.Y);
-                    return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double)blockPos.getY() <= 0.5D) ? blockState2 : blockState2.with(TYPE, SlabType.TOP);
-                case VERTICAL:
-                    double xPos = (ctx.getHitPos().x - (double)blockPos.getX()) - 0.5D;
-                    double zPos = (ctx.getHitPos().z - (double)blockPos.getZ()) - 0.5D;
 
-                    if (direction == Direction.DOWN || direction == Direction.UP){
-                        if(Math.abs(xPos)>Math.abs(zPos)){
-                            if(xPos <= 0){
-                                return blockState2.with(TYPE,SlabType.BOTTOM).with(AXIS, Direction.Axis.X);
-                            }else {
-                                return blockState2.with(TYPE,SlabType.TOP).with(AXIS, Direction.Axis.X);
-                            }
-                        }else {
-                            if(zPos <= 0){
-                                return blockState2.with(TYPE,SlabType.BOTTOM).with(AXIS, Direction.Axis.Z);
-                            }else {
-                                return blockState2.with(TYPE,SlabType.TOP).with(AXIS, Direction.Axis.Z);
+                switch (Components.MODE_KEY.get(ctx.getPlayer()).getPlaceMode()) {
+                    case HORIZONTAL:
+                        blockState2.with(AXIS, Direction.Axis.Y);
+                        return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double) blockPos.getY() <= 0.5D) ? blockState2 : blockState2.with(TYPE, SlabType.TOP);
+                    case VERTICAL:
+                        double xPos = (ctx.getHitPos().x - (double) blockPos.getX()) - 0.5D;
+                        double zPos = (ctx.getHitPos().z - (double) blockPos.getZ()) - 0.5D;
+
+                        if (direction == Direction.DOWN || direction == Direction.UP) {
+                            if (Math.abs(xPos) > Math.abs(zPos)) {
+                                if (xPos <= 0) {
+                                    return blockState2.with(TYPE, SlabType.BOTTOM).with(AXIS, Direction.Axis.X);
+                                } else {
+                                    return blockState2.with(TYPE, SlabType.TOP).with(AXIS, Direction.Axis.X);
+                                }
+                            } else {
+                                if (zPos <= 0) {
+                                    return blockState2.with(TYPE, SlabType.BOTTOM).with(AXIS, Direction.Axis.Z);
+                                } else {
+                                    return blockState2.with(TYPE, SlabType.TOP).with(AXIS, Direction.Axis.Z);
+                                }
                             }
                         }
-                    }
 
-                default:
-                    switch (direction){
-                        case NORTH:
-                            return blockState2.with(TYPE,SlabType.TOP).with(AXIS, Direction.Axis.Z);
-                        case SOUTH:
-                            return blockState2.with(TYPE,SlabType.BOTTOM).with(AXIS, Direction.Axis.Z);
-                        case EAST:
-                            return blockState2.with(TYPE,SlabType.BOTTOM).with(AXIS, Direction.Axis.X);
-                        case WEST:
-                            return blockState2.with(TYPE,SlabType.TOP).with(AXIS, Direction.Axis.X);
-                        case DOWN:
-                            return blockState2.with(TYPE,SlabType.TOP).with(AXIS, Direction.Axis.Y);
-                        default: return blockState2;
-                    }
-            }
+                    default:
+                        switch (direction) {
+                            case NORTH:
+                                return blockState2.with(TYPE, SlabType.TOP).with(AXIS, Direction.Axis.Z);
+                            case SOUTH:
+                                return blockState2.with(TYPE, SlabType.BOTTOM).with(AXIS, Direction.Axis.Z);
+                            case EAST:
+                                return blockState2.with(TYPE, SlabType.BOTTOM).with(AXIS, Direction.Axis.X);
+                            case WEST:
+                                return blockState2.with(TYPE, SlabType.TOP).with(AXIS, Direction.Axis.X);
+                            case DOWN:
+                                return blockState2.with(TYPE, SlabType.TOP).with(AXIS, Direction.Axis.Y);
+                            default:
+                                return blockState2;
+                        }
+                }
+
         }
     }
 
@@ -146,7 +153,11 @@ public class SlabBlockMod extends Block implements Waterloggable {
             boolean blz = context.getHitPos().z - (double)context.getBlockPos().getZ() > 0.5D;
             boolean blx = context.getHitPos().x - (double)context.getBlockPos().getX() > 0.5D;
 
-            switch (BetterslabsClient.mode){
+//            if(context.getWorld().isClient){
+//                PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+//                passedData.writeEnumConstant(BetterslabsClient.mode);
+//            }
+            switch (Components.MODE_KEY.get(context.getPlayer()).getPlaceMode()){
                 case HORIZONTAL:
                     if (context.canReplaceExisting()){
                         if (axis == Direction.Axis.Y){

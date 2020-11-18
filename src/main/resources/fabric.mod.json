@@ -19,6 +19,14 @@
     ],
     "main": [
       "dev.bodner.jack.betterslabs.Betterslabs"
+    ],
+    "cardinal-components": [
+      "dev.bodner.jack.betterslabs.component.Components"
+    ]
+  },
+  "custom": {
+    "cardinal-components": [
+      "betterslabs:placemode"
     ]
   },
   "mixins": [

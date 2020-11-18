@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.5.1'
+    id 'fabric-loom' version '0.5-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -9,6 +9,14 @@ targetCompatibility = JavaVersion.VERSION_1_8
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+repositories {
+    maven {
+        name = "Ladysnake Libs"
+        url = "https://dl.bintray.com/ladysnake/libs"
+    }
+}
+
 
 
 dependencies {
@@ -20,9 +28,6 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation 'org.jetbrains:annotations:15.0'
-    implementation 'org.jetbrains:annotations:15.0'
-    implementation 'org.jetbrains:annotations:15.0'
-
 
     modImplementation 'com.github.Virtuoel:Statement:1.16.2-SNAPSHOT'
     include 'com.github.Virtuoel:Statement:1.16.2-SNAPSHOT'
@@ -30,6 +35,13 @@ dependencies {
     modImplementation "com.lettuce.fudge:artifice:0.13.2+1.16.3"
     include "com.lettuce.fudge:artifice:0.13.2+1.16.3"
 
+    modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.5"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-util:2.7.5"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:2.7.5"
+
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.5"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-util:2.7.5"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:2.7.5"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
@@ -73,5 +85,8 @@ publishing {
 allprojects {
     repositories {
         maven { url 'https://jitpack.io' }
+        flatDir {
+            dirs 'libs'
+        }
     }
 }

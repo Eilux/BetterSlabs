@@ -4,11 +4,10 @@
   "package": "dev.bodner.jack.betterslabs.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "PackLoaderMixin",
-    "SlabGetterMixin",
     "SlabMixin"
   ],
   "client": [
+    "PackLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

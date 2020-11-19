@@ -5,5 +5,6 @@ This mod uses Mixins to change the behavior of vanilla slabs in order to add sid
 ## Credits
 * Everyone who has worked on [Artifice](https://github.com/natanfudge/artifice/tree/1.17)
 * Everyone who has worked on [Fabric](https://fabricmc.net/use/)
+* Virtuoel for making the Statement API and for helping me use it
 ## Dependancies
 The only dependancy for this mod is the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)

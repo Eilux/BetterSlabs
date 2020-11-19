@@ -1,7 +1,5 @@
 package dev.bodner.jack.betterslabs.enums;
 
-import java.util.Arrays;
-
 public enum SlabPlaceMode {
     ALL,
     HORIZONTAL,

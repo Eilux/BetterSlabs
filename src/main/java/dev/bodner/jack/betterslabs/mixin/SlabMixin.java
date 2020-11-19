@@ -1,8 +1,10 @@
 package dev.bodner.jack.betterslabs.mixin;
 
-import dev.bodner.jack.betterslabs.client.BetterslabsClient;
 import dev.bodner.jack.betterslabs.component.Components;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;

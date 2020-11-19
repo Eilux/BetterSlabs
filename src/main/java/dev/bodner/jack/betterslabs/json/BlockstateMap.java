@@ -1,11 +1,8 @@
 package dev.bodner.jack.betterslabs.json;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.internal.LinkedTreeMap;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 

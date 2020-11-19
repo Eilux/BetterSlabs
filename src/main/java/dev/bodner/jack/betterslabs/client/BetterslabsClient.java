@@ -8,7 +8,6 @@ import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import com.swordglowsblue.artifice.api.resource.StringResource;
 import dev.bodner.jack.betterslabs.Betterslabs;
 import dev.bodner.jack.betterslabs.component.Components;
-import dev.bodner.jack.betterslabs.enums.SlabPlaceMode;
 import dev.bodner.jack.betterslabs.json.BlockstateMap;
 import dev.bodner.jack.betterslabs.json.ModelMap;
 import io.netty.buffer.Unpooled;
@@ -65,7 +64,14 @@ public class BetterslabsClient implements ClientModInitializer {
                 //Loops through and creates side slab block models
                 for(int j = 0; j<=mappedBlockstate.getTop().size()-1; j++){
                     //maps the model so texture can be gotten
-                    String[] modelArray = mappedBlockstate.getTop().get(j).split(":");
+                    String[] modelArray;
+                    if(mappedBlockstate.getTop().get(j).split(":").length == 1){
+                        modelArray = new String[]{"minecraft",mappedBlockstate.getTop().get(j)};
+                    }
+                    else {
+                        modelArray = mappedBlockstate.getTop().get(j).split(":");
+                    }
+
                     InputStream stream1 = BetterslabsClient.class.getClassLoader().getResourceAsStream("assets/" + modelArray[0] + "/models/" + modelArray[1] + ".json");
                     JsonObject modelObject = (JsonObject)jsonParser.parse(new InputStreamReader(stream1));
                     ModelMap modelMap = gson.fromJson(modelObject,ModelMap.class);

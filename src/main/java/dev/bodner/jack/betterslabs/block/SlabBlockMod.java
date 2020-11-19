@@ -1,9 +1,6 @@
 package dev.bodner.jack.betterslabs.block;
 
-import dev.bodner.jack.betterslabs.Betterslabs;
-import dev.bodner.jack.betterslabs.client.BetterslabsClient;
 import dev.bodner.jack.betterslabs.component.Components;
-import io.netty.buffer.Unpooled;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -12,7 +9,6 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;

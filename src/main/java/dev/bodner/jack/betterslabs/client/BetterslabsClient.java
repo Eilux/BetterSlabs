@@ -52,6 +52,11 @@ public class BetterslabsClient implements ClientModInitializer {
 
                 //Creates input stream from blockstate file, creates JsonObject from it, then maps it
                 InputStream stream = BetterslabsClient.class.getClassLoader().getResourceAsStream("assets/" + slabList.get(i).getNamespace() + "/blockstates/" + slabList.get(i).getPath() + ".json");
+                if (stream == null){
+                    System.out.printf("BETTERSLABS ERROR: unable to find blockstate file for %s", slabList.get(i).toString());
+                    continue;
+                }
+
                 JsonObject blockstateObject = (JsonObject)jsonParser.parse(new InputStreamReader(stream));
                 BlockstateMap mappedBlockstate = gson.fromJson(blockstateObject, BlockstateMap.class);
 

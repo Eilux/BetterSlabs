@@ -15,8 +15,6 @@ repositories {
         name = "Ladysnake Libs"
         url = "https://dl.bintray.com/ladysnake/libs"
     }
-
-    mavenLocal()
 }
 
 

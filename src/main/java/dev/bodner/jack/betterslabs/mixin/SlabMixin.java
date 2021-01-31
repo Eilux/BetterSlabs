@@ -16,12 +16,15 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SlabBlock.class)
 abstract class SlabMixin {
@@ -38,38 +41,46 @@ abstract class SlabMixin {
 
 
 
-    /**
-     * @author Eilux
-     * @reason functionality
-     */
-    @Overwrite
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    @Inject(method = "getOutlineShape", at = @At("HEAD"), cancellable = true)
+    public void getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context, CallbackInfoReturnable<VoxelShape> info) {
         SlabType slabType = state.get(TYPE);
         Direction.Axis axis = state.get(AXIS);
+
+        start:
         switch(axis) {
             case X:
-                switch (slabType){
+                switch (slabType) {
                     case TOP:
-                        return EAST_SHAPE;
+                        info.setReturnValue(EAST_SHAPE);
+
+                        break start;
                     case BOTTOM:
-                        return WEST_SHAPE;
+                        info.setReturnValue(WEST_SHAPE);
+
+                        break start;
                 }
             case Y:
                 switch (slabType) {
                     case TOP:
-                        return TOP_SHAPE;
+                        info.setReturnValue(TOP_SHAPE);
+
+                        break start;
                     case BOTTOM:
-                        return BOTTOM_SHAPE;
+                        info.setReturnValue(BOTTOM_SHAPE);
+
+                        break start;
                 }
             case Z:
-                switch (slabType){
+                switch (slabType) {
                     case TOP:
-                        return SOUTH_SHAPE;
+                        info.setReturnValue(SOUTH_SHAPE);
+
+                        break start;
                     case BOTTOM:
-                        return NORTH_SHAPE;
+                        info.setReturnValue(NORTH_SHAPE);
+
+                        break start;
                 }
-            default:
-                return VoxelShapes.fullCube();
         }
     }
 
@@ -78,6 +89,7 @@ abstract class SlabMixin {
      * @reason functionality
      */
     @Overwrite
+    @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockPos blockPos = ctx.getBlockPos();
         BlockState blockState = ctx.getWorld().getBlockState(blockPos);
